@@ -6,10 +6,10 @@ resources:
   - namespace.yaml
 images:
   - name: ghcr.io/alexalvarezgallardo-github/identity-service
-    newTag: latest
+    newTag: 47bb5bf4a18fd23d3064462e2927621642ebbfba
   - name: ghcr.io/alexalvarezgallardo-github/wallet-service
-    newTag: latest
+    newTag: 47bb5bf4a18fd23d3064462e2927621642ebbfba
   - name: ghcr.io/alexalvarezgallardo-github/bff-service
-    newTag: latest
+    newTag: 47bb5bf4a18fd23d3064462e2927621642ebbfba
   - name: ghcr.io/alexalvarezgallardo-github/frontend
-    newTag: latest
+    newTag: 47bb5bf4a18fd23d3064462e2927621642ebbfba
