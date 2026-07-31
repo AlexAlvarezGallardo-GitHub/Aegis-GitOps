@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wallet-service
+  labels:
+    app: wallet-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wallet-service
+  template:
+    metadata:
+      labels:
+        app: wallet-service
+    spec:
+      containers:
+        - name: wallet-service
+          image: ghcr.io/alexalvarezgallardo-github/wallet-service:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8083
+          envFrom:
+            - configMapRef:
+                name: wallet-service-config
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8083
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8083
