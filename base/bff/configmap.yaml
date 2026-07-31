@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bff-service-config
+  labels:
+    app: bff-service
+data:
+  SPRING_PROFILES_ACTIVE: "dev"
