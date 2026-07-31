@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: aegis-dev
+resources:
+  - ../../base
+  - namespace.yaml
+images:
+  - name: ghcr.io/alexalvarezgallardo-github/identity-service
+    newTag: latest
+  - name: ghcr.io/alexalvarezgallardo-github/wallet-service
+    newTag: latest
+  - name: ghcr.io/alexalvarezgallardo-github/bff-service
+    newTag: latest
+  - name: ghcr.io/alexalvarezgallardo-github/frontend
+    newTag: latest
