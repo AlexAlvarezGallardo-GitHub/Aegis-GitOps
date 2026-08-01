@@ -1,4 +1,6 @@
 replicaCount: 3
+imagePullSecrets:
+  - name: ghcr-pull
 
 config:
   SPRING_PROFILES_ACTIVE: "prod"
