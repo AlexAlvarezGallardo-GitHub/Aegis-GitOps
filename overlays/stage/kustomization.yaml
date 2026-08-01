@@ -3,3 +3,10 @@ kind: Kustomization
 namespace: aegis-stage
 resources:
   - ../../base
+configMapGenerator:
+  - name: aegis-stage-values
+    files:
+      - identity-values.yaml
+      - wallet-values.yaml
+      - bff-values.yaml
+      - frontend-values.yaml
