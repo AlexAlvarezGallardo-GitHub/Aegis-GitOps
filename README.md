@@ -40,17 +40,17 @@ graph TB
     ArgoCD -->|sync| STAGE
     ArgoCD -->|sync| PROD
 
-    style AppCode fill:#bbf
-    style CI fill:#bbf
-    style GHCR fill:#fdb
-    style Charts fill:#bbf
-    style Overlays fill:#bbf
-    style ArgoApp fill:#bbf
-    style ArgoCD fill:#fdb
-    style DEV fill:#afa
-    style PRE fill:#afa
-    style STAGE fill:#afa
-    style PROD fill:#afa
+    style AppCode fill:#bbf,color:#000
+    style CI fill:#bbf,color:#000
+    style GHCR fill:#fdb,color:#000
+    style Charts fill:#bbf,color:#000
+    style Overlays fill:#bbf,color:#000
+    style ArgoApp fill:#bbf,color:#000
+    style ArgoCD fill:#fdb,color:#000
+    style DEV fill:#afa,color:#000
+    style PRE fill:#afa,color:#000
+    style STAGE fill:#afa,color:#000
+    style PROD fill:#afa,color:#000
 ```
 
 ## Deployment Flow
@@ -99,7 +99,7 @@ graph TB
 
     Apps --> AppsDev[dev/]
 
-    style Repo fill:#fdb
+    style Repo fill:#fdb,color:#000
 ```
 
 ## Helm charts
