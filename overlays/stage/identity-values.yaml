@@ -1,4 +1,6 @@
 replicaCount: 2
+imagePullSecrets:
+  - name: ghcr-pull
 
 config:
   SPRING_PROFILES_ACTIVE: "stage"
