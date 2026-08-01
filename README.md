@@ -195,8 +195,57 @@ kubectl apply -k infrastructure/argocd/install
 kubectl -n argocd apply -f applications/aegis-app-of-apps.yaml
 ```
 
+## Local Development (minikube)
+
+### Prerequisites
+
+- Docker, Minikube, kubectl, Helm, JDK 21
+- A GitHub PAT with `read:packages` scope to pull private GHCR images
+
+### 1. Create the cluster
+
+```bash
+minikube start --cpus 4 --memory 8192
+```
+
+### 2. Create the GHCR pull secret in every environment namespace
+
+```bash
+kubectl create namespace aegis-dev aegis-pre aegis-stage aegis-prod argocd
+for ns in aegis-dev aegis-pre aegis-stage aegis-prod; do
+  kubectl create secret docker-registry ghcr-pull -n $ns \
+    --docker-server=ghcr.io \
+    --docker-username=<your-user> \
+    --docker-password=<PAT>
+done
+```
+
+The charts reference this secret via `imagePullSecrets[].name = ghcr-pull` in the environment overlays.
+
+### 3. Install Argo CD
+
+```bash
+kubectl apply -k infrastructure/argocd/install
+# wait for pods
+kubectl wait -n argocd --for=condition=Ready pod -l app.kubernetes.io/name=argocd-server --timeout=300s
+```
+
+### 4. Bootstrap the App of Apps
+
+```bash
+kubectl -n argocd apply -f applications/aegis-app-of-apps.yaml
+```
+
+### 5. Access the dashboard
+
+```bash
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 -d
+kubectl port-forward svc/argocd-server -n argocd 8080:443
+# https://localhost:8080  (user: admin)
+```
+
+### 6. Promote between environments
+
+Update the image `tag` in `overlays/<env>/*-values.yaml`. DEV and PRE auto-sync; STAGE and PROD require a manual sync (approval gate).
+
 ## Image tag updates
-
-The CI pipeline in `Aegis` updates the image `tag` in `overlays/dev/*-values.yaml` with the latest image tag after every merge to `main`.
-
-Images are hosted at `ghcr.io/AlexAlvarezGallardo-GitHub/`.
