@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: identity-pre
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/AlexAlvarezGallardo-GitHub/Aegis-GitOps
+    targetRevision: main
+    path: charts/identity
+    helm:
+      valueFiles:
+        - ../../overlays/pre/identity-values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: aegis-pre
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
