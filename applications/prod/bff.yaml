@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: bff-prod
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/AlexAlvarezGallardo-GitHub/Aegis-GitOps
+    targetRevision: main
+    path: charts/bff
+    helm:
+      valueFiles:
+        - ../../overlays/prod/bff-values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: aegis-prod
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+      - Prune=false
+    # Manual sync - approval gate required before promotion
