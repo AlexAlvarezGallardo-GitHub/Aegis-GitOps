@@ -1,0 +1,35 @@
+replicaCount: 3
+
+config:
+  SPRING_PROFILES_ACTIVE: "prod"
+
+resources:
+  limits:
+    cpu: 1
+    memory: 1Gi
+  requests:
+    cpu: 500m
+    memory: 512Mi
+
+autoscaling:
+  enabled: True
+  minReplicas: 3
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+
+podDisruptionBudget:
+  enabled: True
+  minAvailable: 2
+
+affinity:
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - identity
+          topologyKey: kubernetes.io/hostname
