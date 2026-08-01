@@ -3,3 +3,10 @@ kind: Kustomization
 namespace: aegis-pre
 resources:
   - ../../base
+configMapGenerator:
+  - name: aegis-pre-values
+    files:
+      - identity-values.yaml
+      - wallet-values.yaml
+      - bff-values.yaml
+      - frontend-values.yaml
