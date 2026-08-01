@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: argocd-cm
+data:
+  application.instanceLabelKey: aegis.argoproj.io/instance
+  timeout.reconciliation: 180s
+  admin.enabled: "true"
+  url: https://argocd.aegis.local
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-rbac-cm
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: argocd-rbac-cm
+data:
+  policy.csv: |
+    p, role:dev-admin, applications, *, dev/*, allow
+    p, role:pre-admin, applications, *, pre/*, allow
+    p, role:stage-admin, applications, *, stage/*, allow
+    p, role:prod-admin, applications, *, prod/*, allow
+    p, role:platform-admin, applications, *, *, allow
+    g, dev-team, role:dev-admin
+    g, platform-team, role:platform-admin
+  policy.default: ""
+  scopes: "[groups]"
