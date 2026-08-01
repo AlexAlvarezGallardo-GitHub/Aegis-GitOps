@@ -1,0 +1,19 @@
+# Valores base comunes a todos los entornos. Los overlays los sobreescriben por entorno.
+# Referencia de imagen y puertos por servicio.
+services:
+  identity:
+    repository: ghcr.io/alexalvarezgallardo-github/identity-service
+    port: 8081
+    probePath: /actuator/health
+  wallet:
+    repository: ghcr.io/alexalvarezgallardo-github/wallet-service
+    port: 8083
+    probePath: /actuator/health
+  bff:
+    repository: ghcr.io/alexalvarezgallardo-github/bff-service
+    port: 8082
+    probePath: /actuator/health
+  frontend:
+    repository: ghcr.io/alexalvarezgallardo-github/frontend
+    port: 80
+    probePath: /
