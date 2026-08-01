@@ -1,0 +1,24 @@
+replicaCount: 2
+
+config:
+  PROXY_API_URL: "http://bff-service"
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 250m
+    memory: 256Mi
+
+autoscaling:
+  enabled: False
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+
+podDisruptionBudget:
+  enabled: False
+  minAvailable: 1
+
+affinity: {}
