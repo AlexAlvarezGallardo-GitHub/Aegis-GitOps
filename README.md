@@ -135,6 +135,66 @@ Environment-specific configuration is provided via Helm value files in each over
 | STAGE       | `overlays/stage/` | `aegis-stage` | Stub   |
 | PROD        | `overlays/prod/`  | `aegis-prod`  | Stub   |
 
+## Argo CD and Environment Promotion
+
+Argo CD is bootstrapped via GitOps and manages every application through an **App of Apps** pattern.
+
+```mermaid
+graph TB
+    Root[App of Apps] --> Dev[DEV Applications]
+    Root --> Pre[PRE Applications]
+    Root --> Stage[STAGE Applications]
+    Root --> Prod[PROD Applications]
+    Root --> Mon[Monitoring]
+    Root --> Log[Logging]
+
+    Dev --> DevS[identity, wallet, bff, frontend]
+    Pre --> PreS[identity, wallet, bff, frontend]
+    Stage --> StageS[identity, wallet, bff, frontend]
+    Prod --> ProdS[identity, wallet, bff, frontend]
+
+    style Root fill:#fdb,color:#000
+    style Dev fill:#bbf,color:#000
+    style Pre fill:#bbf,color:#000
+    style Stage fill:#bbf,color:#000
+    style Prod fill:#bbf,color:#000
+    style Mon fill:#bbf,color:#000
+    style Log fill:#bbf,color:#000
+```
+
+### Sync policies
+
+| Environment | Sync | Prune | Self-Heal |
+|-------------|------|-------|-----------|
+| DEV   | Auto  | Yes | Yes |
+| PRE   | Auto  | Yes | Yes |
+| STAGE | Manual/Approval | Yes | Yes |
+| PROD  | Manual/Approval | No  | Yes |
+
+### Promotion flow
+
+```mermaid
+graph LR
+    A[DEV] -->|auto| B[PRE]
+    B -->|approval| C[STAGE]
+    C -->|approval| D[PROD]
+    style A fill:#afa,color:#000
+    style B fill:#afa,color:#000
+    style C fill:#afa,color:#000
+    style D fill:#afa,color:#000
+```
+
+Promotion is declarative: updating the image tag in `overlays/<env>/*-values.yaml` in Git is the promotion. Argo CD syncs DEV and PRE automatically; STAGE and PROD require a manual sync (approval gate).
+
+### Bootstrap
+
+Apply the bootstrap application once, then Argo CD self-manages everything:
+
+```
+kubectl apply -k infrastructure/argocd/install
+kubectl -n argocd apply -f applications/aegis-app-of-apps.yaml
+```
+
 ## Image tag updates
 
 The CI pipeline in `Aegis` updates the image `tag` in `overlays/dev/*-values.yaml` with the latest image tag after every merge to `main`.
