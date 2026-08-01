@@ -1,4 +1,6 @@
 replicaCount: 1
+imagePullSecrets:
+  - name: ghcr-pull
 
 config:
   PROXY_API_URL: "http://bff-service"
