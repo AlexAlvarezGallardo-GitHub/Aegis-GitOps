@@ -35,3 +35,6 @@ affinity:
                 values:
                   - frontend
           topologyKey: kubernetes.io/hostname
+nginx:
+  upstream: bff-prod
+  port: 8082
