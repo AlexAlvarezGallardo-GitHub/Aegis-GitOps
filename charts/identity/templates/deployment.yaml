@@ -16,7 +16,7 @@ spec:
       labels:
         {{- include "identity.selectorLabels" . | nindent 8 }}
       annotations:                                                
-        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}  
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}   # ← NUEVA (8 espacios)
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -38,9 +38,9 @@ spec:
             httpGet:
               path: {{ .Values.probe.path }}
               port: http
-            initialDelaySeconds: 25
+            initialDelaySeconds: 40
             periodSeconds: 10
-            failureThreshold: 5
+            failureThreshold: 8
           readinessProbe:
             httpGet:
               path: {{ .Values.probe.path }}
