@@ -4,6 +4,9 @@ imagePullSecrets:
 
 config:
   SPRING_PROFILES_ACTIVE: "dev"
+  SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres-identity:5432/aegis_identity"
+  SPRING_DATASOURCE_USERNAME: "aegis"
+  SPRING_DATASOURCE_PASSWORD: "aegis_secret"
 
 resources:
   limits:
