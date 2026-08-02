@@ -32,6 +32,10 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ include "frontend.fullname" . }}-config
+          volumeMounts:
+            - name: nginx-conf
+              mountPath: /etc/nginx/conf.d/default.conf
+              subPath: default.conf
           livenessProbe:
             httpGet:
               path: {{ .Values.probe.path }}
@@ -54,3 +58,7 @@ spec:
           tolerations:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+      volumes:
+        - name: nginx-conf
+          configMap:
+            name: {{ include "frontend.fullname" . }}-nginx
