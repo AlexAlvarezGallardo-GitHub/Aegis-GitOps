@@ -24,6 +24,10 @@ probe:
 config:
   PROXY_API_URL: "http://bff-service"
 
+nginx:
+  upstream: bff-dev
+  port: 8082
+
 ingress:
   enabled: false
   className: nginx
