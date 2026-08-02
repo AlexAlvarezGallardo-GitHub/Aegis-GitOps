@@ -15,6 +15,8 @@ spec:
     metadata:
       labels:
         {{- include "identity.selectorLabels" . | nindent 8 }}
+      annotations:                                                
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}  
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -36,10 +38,16 @@ spec:
             httpGet:
               path: {{ .Values.probe.path }}
               port: http
+            initialDelaySeconds: 25
+            periodSeconds: 10
+            failureThreshold: 5
           readinessProbe:
             httpGet:
               path: {{ .Values.probe.path }}
               port: http
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            failureThreshold: 5
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           {{- with .Values.nodeSelector }}
