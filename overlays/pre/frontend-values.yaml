@@ -24,3 +24,6 @@ podDisruptionBudget:
   minAvailable: 1
 
 affinity: {}
+nginx:
+  upstream: bff-pre
+  port: 8082
