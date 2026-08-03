@@ -16,11 +16,11 @@ config:
 
 resources:
   limits:
-    cpu: 200m
-    memory: 256Mi
+    cpu: 500m
+    memory: 768Mi
   requests:
-    cpu: 100m
-    memory: 128Mi
+    cpu: 250m
+    memory: 384Mi
 
 autoscaling:
   enabled: False
