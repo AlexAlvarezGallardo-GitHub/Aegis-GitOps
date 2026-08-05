@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: monitoring-stack
-  namespace: monitoring
-data:
-  status: pending
-  stack: prometheus,grafana,alertmanager,loki,tempo

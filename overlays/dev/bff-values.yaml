@@ -13,6 +13,8 @@ config:
   AEGIS_IDENTITY_SERVICE_URL: "http://identity-dev:8081"
   AEGIS_WALLET_SERVICE_URL: "http://wallet-dev:8083"
   MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS: "always"
+  OTLP_TRACING_ENDPOINT: "http://tempo.monitoring.svc:4318/v1/traces"
+  MANAGEMENT_METRICS_TAGS_APPLICATION: "aegis-bff"
 
 resources:
   limits:

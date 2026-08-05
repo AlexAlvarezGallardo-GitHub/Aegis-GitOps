@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-config
+  namespace: monitoring
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval: 15s
+      evaluation_interval: 15s
+    alerting:
+      alertmanagers:
+        - static_configs:
+            - targets: ["alertmanager:9093"]
+    rule_files:
+      - /etc/prometheus/rules/*.yml
+    scrape_configs:
+      - job_name: prometheus
+        static_configs:
+          - targets: ["localhost:9090"]
+      - job_name: aegis-services
+        metrics_path: /actuator/prometheus
+        static_configs:
+          - targets:
+              - identity-dev.aegis-dev.svc:8081
+              - bff-dev.aegis-dev.svc:8082
+              - wallet-dev.aegis-dev.svc:8083
+      - job_name: kube-state-metrics
+        static_configs:
+          - targets: ["kube-state-metrics:8080"]
+      - job_name: node-exporter
+        kubernetes_sd_configs:
+          - role: node
+        relabel_configs:
+          - source_labels: [__address__]
+            regex: "(.*):10250"
+            target_label: __address__
+            replacement: "${1}:9100"
+      - job_name: tempo
+        static_configs:
+          - targets: ["tempo:3200"]
