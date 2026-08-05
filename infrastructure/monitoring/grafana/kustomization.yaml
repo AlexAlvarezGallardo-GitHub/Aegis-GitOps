@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: monitoring
+resources:
+  - deployment.yaml
+  - service.yaml
+  - datasources.yaml
+  - providers.yaml
+configMapGenerator:
+  - name: grafana-dashboards
+    files:
+      - dashboards/jvm-overview.json
+      - dashboards/http-requests.json
+      - dashboards/kafka-consumers.json
+      - dashboards/system-overview.json
