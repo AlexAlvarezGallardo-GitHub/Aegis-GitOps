@@ -1,7 +1,7 @@
 replicaCount: 1
 image:
   repository: ghcr.io/alexalvarezgallardo-github/identity-service
-  tag: e4b5254ea4ff2d7d425944e37662c112f103d1fa
+  tag: 64395ba546086fc68f22de0e35b7883335dd867c
 imagePullSecrets:
   - name: ghcr-pull
 
