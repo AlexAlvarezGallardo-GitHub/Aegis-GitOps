@@ -1,0 +1,30 @@
+# macOS
+.DS_Store
+.DS_Store?
+.AppleDouble
+.LSOverride
+
+# Windows / IDE
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/
+*.iml
+
+# Editors
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+
+# Helm / kustomize temp output
+charts/*/charts/
+*.tgz
+
+# Local clusters / secrets
+.kube/
+minikube/
+*.pem
+*.key
