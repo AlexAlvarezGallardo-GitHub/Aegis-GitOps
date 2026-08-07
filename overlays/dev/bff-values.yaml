@@ -1,7 +1,7 @@
 replicaCount: 1
 image:
   repository: ghcr.io/alexalvarezgallardo-github/bff-service
-  tag: beb8de0fc485b82d973303add62d251371f27eb6
+  tag: 64b313c6f52839e543ad4029959cd62dd6580a13
 imagePullSecrets:
   - name: ghcr-pull
 
