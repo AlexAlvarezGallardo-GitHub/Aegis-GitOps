@@ -1,8 +1,5 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - identity
-  - wallet
-  - audit
-  - fraud
-  - reporting
+  - postgres-reporting.yaml
+  - postgres-reporting-svc.yaml

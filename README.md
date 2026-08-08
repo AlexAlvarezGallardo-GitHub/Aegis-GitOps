@@ -137,20 +137,18 @@ sequenceDiagram
 ```
 Aegis-GitOps
 ├── applications/            # Argo CD Application manifests (App of Apps)
-│   ├── app-of-apps-dev.yaml # Bootstraps the DEV applications
-│   ├── logging.yaml         # Point-to infrastructure/logging
-│   ├── monitoring.yaml      # Point-to infrastructure/monitoring
+│   ├── app-of-apps-dev.yaml # Bootstraps the DEV applications (incl. monitoring + logging)
 │   └── dev|pre|stage|prod/  # Per-service Applications for each environment
 ├── base/                    # Shared Kustomize base consumed by all overlays
 │   ├── kustomization.yaml   # configMapGenerator -> aegis-base-values
 │   └── values.yaml          # Shared reference values
 ├── charts/                  # Reusable Helm charts, one per service
-│   ├── identity/  wallet/  bff/  frontend/
+│   ├── identity/  wallet/  bff/  frontend/  audit/  fraud/  reporting/
 ├── overlays/                # Environment overlays (Helm values + namespace)
 │   ├── dev/  pre/  stage/  prod/
 ├── infrastructure/          # Platform components managed via GitOps
 │   ├── argocd/              # Argo CD install, config and RBAC
-│   ├── database/            # PostgreSQL (identity, wallet) — base + overlays
+│   ├── database/            # PostgreSQL (identity, wallet, audit, fraud, reporting) — base + overlays
 │   ├── kafka/               # Kafka + ZooKeeper — base + overlays
 │   ├── redis/               # Redis session store — base + overlays
 │   ├── logging/             # Loki + Promtail
@@ -230,7 +228,7 @@ graph TB
     Root --> Mon[Monitoring]
     Root --> Log[Logging]
 
-    Dev --> DevS[identity, wallet, bff, frontend, database, kafka, redis]
+    Dev --> DevS[identity, wallet, bff, frontend, audit, fraud, reporting, database, kafka, redis]
     Pre --> PreS[identity, wallet, bff, frontend]
     Stage --> StageS[identity, wallet, bff, frontend]
     Prod --> ProdS[identity, wallet, bff, frontend]
@@ -262,7 +260,7 @@ Beyond application manifests, this repository defines the platform components th
 | Component | Location | Notes |
 |-----------|----------|-------|
 | **Argo CD** | `infrastructure/argocd/` | install, app config, RBAC |
-| **PostgreSQL** | `infrastructure/database/` | one instance per bounded context (identity, wallet) |
+| **PostgreSQL** | `infrastructure/database/` | one instance per bounded context (identity, wallet, audit, fraud, reporting) |
 | **Kafka + ZooKeeper** | `infrastructure/kafka/` | event backbone |
 | **Redis** | `infrastructure/redis/` | BFF session store |
 | **Prometheus + Grafana + Alertmanager** | `infrastructure/monitoring/` | metrics and alerting |
