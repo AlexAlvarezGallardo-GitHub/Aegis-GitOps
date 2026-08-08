@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-reporting
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-reporting
+  template:
+    metadata:
+      labels:
+        app: postgres-reporting  
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:16.4-alpine
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              value: aegis
+            - name: POSTGRES_PASSWORD
+              value: aegis_secret
+            - name: POSTGRES_DB
+              value: aegis_reporting

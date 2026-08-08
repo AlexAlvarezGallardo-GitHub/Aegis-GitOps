@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-audit
+spec:
+  selector:
+    app: postgres-audit
+  ports:
+    - port: 5432
+      targetPort: 5432

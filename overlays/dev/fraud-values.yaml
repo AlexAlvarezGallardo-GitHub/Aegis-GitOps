@@ -1,0 +1,37 @@
+replicaCount: 1
+image:
+  repository: ghcr.io/alexalvarezgallardo-github/fraud-service
+  tag: aff85e8c7fbbe08a09f2749d7abc0fc0e949bd75
+imagePullSecrets:
+  - name: ghcr-pull
+
+config:
+  SPRING_PROFILES_ACTIVE: "dev"
+  SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres-fraud:5432/aegis_fraud"
+  SPRING_DATASOURCE_USERNAME: "aegis"
+  SPRING_DATASOURCE_PASSWORD: "aegis_secret"
+  SPRING_KAFKA_BOOTSTRAP_SERVERS: "kafka:9092"
+  MANAGEMENT_HEALTH_KAFKA_ENABLED: "false"
+  MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS: "always"
+  OTLP_TRACING_ENDPOINT: "http://tempo.monitoring.svc:4318/v1/traces"
+  MANAGEMENT_METRICS_TAGS_APPLICATION: "aegis-fraud-service"
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 768Mi
+  requests:
+    cpu: 250m
+    memory: 384Mi
+
+autoscaling:
+  enabled: False
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+
+podDisruptionBudget:
+  enabled: False
+  minAvailable: 1
+
+affinity: {}

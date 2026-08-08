@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: fraud-dev
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/AlexAlvarezGallardo-GitHub/Aegis-GitOps
+    targetRevision: main
+    path: charts/fraud
+    helm:
+      valueFiles:
+        - ../../overlays/dev/fraud-values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: aegis-dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

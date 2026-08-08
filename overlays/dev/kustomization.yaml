@@ -10,3 +10,6 @@ configMapGenerator:
       - wallet-values.yaml
       - bff-values.yaml
       - frontend-values.yaml
+      - audit-values.yaml
+      - fraud-values.yaml
+      - reporting-values.yaml

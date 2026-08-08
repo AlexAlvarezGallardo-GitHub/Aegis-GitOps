@@ -17,3 +17,15 @@ services:
     repository: ghcr.io/alexalvarezgallardo-github/frontend
     port: 80
     probePath: /
+  audit:
+    repository: ghcr.io/alexalvarezgallardo-github/audit-service
+    port: 8088
+    probePath: /actuator/health
+  fraud:
+    repository: ghcr.io/alexalvarezgallardo-github/fraud-service
+    port: 8089
+    probePath: /actuator/health
+  reporting:
+    repository: ghcr.io/alexalvarezgallardo-github/reporting-service
+    port: 8087
+    probePath: /actuator/health
