@@ -1,7 +1,7 @@
 replicaCount: 1
 image:
   repository: ghcr.io/alexalvarezgallardo-github/wallet-service
-  tag: 342649ee0a459dd44519f58918574202c08eb001
+  tag: 261a1b1247d333d2cd342a0dad7fd38ba5273f1a
 imagePullSecrets:
   - name: ghcr-pull
 
