@@ -1,7 +1,7 @@
 replicaCount: 1
 image:
   repository: ghcr.io/alexalvarezgallardo-github/reporting-service
-  tag: aff85e8c7fbbe08a09f2749d7abc0fc0e949bd75
+  tag: 3f93561ee1cec7b5e7a0b090da4ca9389286f590
 imagePullSecrets:
   - name: ghcr-pull
 
