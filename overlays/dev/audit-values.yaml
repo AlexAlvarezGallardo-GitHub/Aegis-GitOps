@@ -1,7 +1,7 @@
 replicaCount: 1
 image:
   repository: ghcr.io/alexalvarezgallardo-github/audit-service
-  tag: 1b44d186b3f865e7edb71f95038ab7c8061bdb9d
+  tag: 58ea958c460f040391422a220cc9068457137981
 imagePullSecrets:
   - name: ghcr-pull
 
