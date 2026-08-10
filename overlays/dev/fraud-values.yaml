@@ -1,7 +1,7 @@
 replicaCount: 1
 image:
   repository: ghcr.io/alexalvarezgallardo-github/fraud-service
-  tag: 488d769716d24a500f6548f50acd03b9b4d1f4c5
+  tag: 61fa62416b14649b5effc489b88d9df53c2c3aa6
 imagePullSecrets:
   - name: ghcr-pull
 
