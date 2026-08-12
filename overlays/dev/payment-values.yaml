@@ -1,7 +1,7 @@
 replicaCount: 1
 image:
   repository: ghcr.io/alexalvarezgallardo-github/payment-service
-  tag: latest
+  tag: 1c380bffb73a0e5a4c618d9f971ec78b7fbda8aa
 imagePullSecrets:
   - name: ghcr-pull
 
