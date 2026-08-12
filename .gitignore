@@ -28,3 +28,4 @@ charts/*/charts/
 minikube/
 *.pem
 *.key
+.env

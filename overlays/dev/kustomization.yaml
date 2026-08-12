@@ -13,3 +13,4 @@ configMapGenerator:
       - audit-values.yaml
       - fraud-values.yaml
       - reporting-values.yaml
+      - payment-values.yaml

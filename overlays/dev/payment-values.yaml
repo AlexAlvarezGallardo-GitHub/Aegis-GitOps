@@ -1,0 +1,42 @@
+replicaCount: 1
+image:
+  repository: ghcr.io/alexalvarezgallardo-github/payment-service
+  tag: latest
+imagePullSecrets:
+  - name: ghcr-pull
+
+config:
+  SPRING_PROFILES_ACTIVE: "dev"
+  SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres-payment:5432/aegis_payment"
+  SPRING_DATASOURCE_USERNAME: "aegis"
+  SPRING_KAFKA_BOOTSTRAP_SERVERS: "kafka:9092"
+  MANAGEMENT_HEALTH_KAFKA_ENABLED: "false"
+  MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS: "always"
+  OTLP_TRACING_ENDPOINT: "http://tempo.monitoring.svc:4318/v1/traces"
+  MANAGEMENT_METRICS_TAGS_APPLICATION: "aegis-payment-service"
+  AEGIS_PAYMENT_FRAUD_BASE_URL: "http://fraud-dev:8089"
+  AEGIS_PAYMENT_WALLET_BASE_URL: "http://wallet-dev:8083"
+
+# Credentials come from the out-of-band Secret `aegis-dev-credentials`
+# (created by scripts/setup-minikube.ps1). Never commit secret material.
+secretRef: aegis-dev-credentials
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 768Mi
+  requests:
+    cpu: 250m
+    memory: 384Mi
+
+autoscaling:
+  enabled: False
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+
+podDisruptionBudget:
+  enabled: False
+  minAvailable: 1
+
+affinity: {}
