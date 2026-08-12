@@ -1,0 +1,61 @@
+replicaCount: 1
+
+image:
+  repository: ghcr.io/alexalvarezgallardo-github/payment-service
+  tag: latest
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  name: ""
+
+service:
+  type: ClusterIP
+  port: 8084
+  targetPort: 8084
+
+probe:
+  path: /actuator/health
+
+config:
+  SPRING_PROFILES_ACTIVE: "dev"
+
+# Optional reference to a Kubernetes Secret (created out-of-band) whose keys
+# are injected as environment variables. Never commit secret material to git.
+secretRef: ""
+
+ingress:
+  enabled: false
+  className: nginx
+  annotations: {}
+  hosts:
+    - host: payment.aegis.local
+      paths:
+        - path: /
+          pathType: Prefix
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 250m
+    memory: 256Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+
+podDisruptionBudget:
+  enabled: false
+  minAvailable: 1
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
